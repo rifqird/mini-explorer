@@ -1,5 +1,5 @@
 <template>
-  <Explorer />
+  <router-view />
 </template>
 <script setup lang="ts">
 import Explorer from "./views/Explorer.vue";

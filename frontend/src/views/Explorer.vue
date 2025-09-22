@@ -2,6 +2,14 @@
 import {ref} from "vue";
 import FolderTree from "../components/FolderTree.vue";
 import FolderPanel from "../components/FolderPanel.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+function handleLogout() {
+  localStorage.removeItem("token"); // hapus JWT token
+  router.push("/login"); // kembali ke login
+}
 interface Folder{
     id:number;
     parent_id:number|null;
@@ -14,6 +22,7 @@ function updateSelected(folder: Folder){
 }
 </script>
 <template>
+    <button @click="handleLogout" class="logout-btn">Logout</button>
     <div class="explorer-container">
         <div class="panel-left">
             <FolderTree :selectedFolder="selectedFolder" @folderSelected="updateSelected"/>
@@ -40,5 +49,16 @@ function updateSelected(folder: Folder){
     padding:10px;
     overflow-y:auto;
     background:#ffffff;
+}
+.logout-btn {
+  background: crimson;
+  color: white;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.logout-btn:hover {
+  background: darkred;
 }
 </style>

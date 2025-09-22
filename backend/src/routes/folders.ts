@@ -1,6 +1,7 @@
 import { Router } from "express";
 import pool from "../db.js";
 import multer from "multer";
+import { authMiddleware } from "../middleware/auth.js";
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/"); // folder untuk menyimpan file
@@ -22,7 +23,7 @@ router.get("/", async (req, res)=>{
         res.status(500).json({error: "Failed to fetch folders"});
     }
 });
-router.post("/folders", async (req, res) => {
+router.post("/folders",authMiddleware, async (req, res) => {
   const { name, parent_id } = req.body;
   if (!name) return res.status(400).json({ error: "Folder name required" });
 
